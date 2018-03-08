@@ -1,5 +1,5 @@
 // test every e2e case
-
+var path = require('path');
 var cp = require('child_process');
 var execFileSync = cp.execFileSync;
 
@@ -13,8 +13,8 @@ runTest('site-src-ext');
 runTest('site-dist-ext');
 runTest('fresh');
 
-function runTest(path) {
-	var dir = __dirname + '/' + path;
+function runTest(testCase) {
+	var dir = path.join(__dirname, testCase);
 	execFileSync('rm', ['-rf', dir + '/dist']);
 	execFileSync('node', [dir + '/index.js']);
 	var diffError;
@@ -25,9 +25,9 @@ function runTest(path) {
 		diffError = e;
 	}
 	if (diffError) {
-		console.error('differences detected in "' + path + '" case');
+		console.error('differences detected in "' + testCase + '" case');
 	}
 	else {
-		console.log('case "' + path + '" passed');
+		console.log('case "' + testCase + '" passed');
 	}
 }
