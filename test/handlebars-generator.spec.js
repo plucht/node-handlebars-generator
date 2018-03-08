@@ -128,6 +128,42 @@ describe('HandlebarsGenerator', function () {
 			});
 		});
 
+        describe('.generateSite', function () {
+            describe('call with default options', function () {
+                beforeEach(function () {
+                    sinon.spy(handlebarsGenerator, 'registerSourceDirectory');
+                    sinon.spy(handlebarsGenerator, 'generatePages');
+                    handlebarsGenerator.generateSite('source', 'dist');
+                });
+                afterEach(function () {
+                    handlebarsGenerator.sourcePromises = [];
+                });
+                it('should set source extension to html', function () {
+                    should(handlebarsGenerator.registerSourceDirectory).be.calledWith('source', { extension: 'html' });
+                });
+                it('should set dist extension to html', function () {
+                    should(handlebarsGenerator.generatePages).be.calledWith('dist', { extension: 'html' });
+                });
+            });
+            describe('call with non-default options', function () {
+                beforeEach(function () {
+                    var options = { sourceExtension: 'hbs', distExtension: 'php' };
+                    sinon.spy(handlebarsGenerator, 'registerSourceDirectory');
+                    sinon.spy(handlebarsGenerator, 'generatePages');
+                    handlebarsGenerator.generateSite('source', 'dist', options);
+                });
+                afterEach(function () {
+                    handlebarsGenerator.sourcePromises = [];
+                });
+                it('should set source extension to hbs', function () {
+                    should(handlebarsGenerator.registerSourceDirectory).be.calledWith('source', { extension: 'hbs' });
+                });
+                it('should set dist extension to php', function () {
+                    should(handlebarsGenerator.generatePages).be.calledWith('dist', { extension: 'php' });
+                });
+            });
+        });
+
 		describe('.generatePages', function () {
 
 			describe('without any registrations', function () {

@@ -4,9 +4,13 @@ var cp = require('child_process');
 var execFileSync = cp.execFileSync;
 
 runTest('basic');
+runTest('basic-src-ext');
+runTest('basic-dist-ext');
 runTest('tiered');
 runTest('factoried');
 runTest('site');
+runTest('site-src-ext');
+runTest('site-dist-ext');
 runTest('fresh');
 
 function runTest(path) {
